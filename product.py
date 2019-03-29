@@ -1,3 +1,9 @@
+"""
+product.py
+~~~~~~~~~~~~~~~
+This module defines the Product class. Also, active products in the catalog 
+is defined as a list instead of fetching from a DB or file.
+"""
 from exceptions import InvalidProductException
 
 ITEMS = ['VOUCHER', 'TSHIRT', 'MUG']
@@ -9,6 +15,11 @@ PRICE_MAPPING = {
 
 
 class Product:
+    """
+    Product object
+
+    :param code: Code of the product.
+    """
 
     def __init__(self, code):
         if code not in ITEMS:
@@ -17,4 +28,7 @@ class Product:
 
     @property
     def price(self):
+        """
+        Returns the price of the product.
+        """
         return PRICE_MAPPING.get(self.code)
