@@ -3,8 +3,8 @@ checkout.py
 ~~~~~~~~~~~~~~~
 This module contains the Checkout class which is used to scan products and calculate total.
 """
-from order import Order
-from discount import TwoForOneDiscount, BulkPurchaseDiscount
+from .order import Order
+from .discount import TwoForOneDiscount, BulkPurchaseDiscount
 
 
 class Checkout:

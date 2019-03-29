@@ -3,7 +3,7 @@ order.py
 ~~~~~~~~~~~~~~~
 This module contains the ProductOrder and Order objects.
 """
-from product import Product
+from .product import Product
 
 
 class ProductOrder:

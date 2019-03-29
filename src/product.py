@@ -4,7 +4,7 @@ product.py
 This module defines the Product class. Also, active products in the catalog 
 is defined as a list instead of fetching from a DB or file.
 """
-from exceptions import InvalidProductException
+from .exceptions import InvalidProductException
 
 ITEMS = ['VOUCHER', 'TSHIRT', 'MUG']
 PRICE_MAPPING = {
