@@ -4,14 +4,20 @@ product.py
 This module defines the Product class. Also, active products in the catalog 
 is defined as a list instead of fetching from a DB or file.
 """
+import os
+import json
 from .exceptions import InvalidProductException
 
-ITEMS = ['VOUCHER', 'TSHIRT', 'MUG']
-PRICE_MAPPING = {
-    'VOUCHER': 5.00,
-    'TSHIRT': 20.00,
-    'MUG': 7.50
-}
+
+def get_product_price_mapping():
+    """
+    Loads products dict from a JSON file.
+    """
+    json_path = os.path.abspath('src/products.json')
+    
+    with open(json_path) as f:
+        products = json.load(f)
+    return products
 
 
 class Product:
@@ -22,7 +28,9 @@ class Product:
     """
 
     def __init__(self, code):
-        if code not in ITEMS:
+        self.product_price_map = get_product_price_mapping()
+        self.active_products = self.product_price_map.keys()
+        if code not in self.active_products:
             raise InvalidProductException('Product not in Catalog')
         self.code = code
 
@@ -31,4 +39,4 @@ class Product:
         """
         Returns the price of the product.
         """
-        return PRICE_MAPPING.get(self.code)
+        return self.product_price_map.get(self.code)

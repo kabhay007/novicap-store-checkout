@@ -5,6 +5,7 @@ This module contains the base discount class and discounts schemes applicable.
 To add a new discount scheme, a new class should subclass the base Discount class.
 """
 
+
 class Discount:
     """Base Discount object
     """

@@ -43,7 +43,7 @@ class Checkout:
 
         for k, v in self.order.product_orders.items():
             total_price += v.quantity * v.product.price
-        
+
         return total_price
 
     def get_total_discount(self):
@@ -56,7 +56,7 @@ class Checkout:
             total_discount += promotion.get_discount(self.order)
 
         return total_discount
-    
+
     def get_total_display(self):
         """
         Return total but in a pretty format with Euro sign.

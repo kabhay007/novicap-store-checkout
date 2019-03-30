@@ -22,6 +22,7 @@ class ProductOrder:
 class Order:
     """
     Order object
+    Contains a list of ProductOrder objects.
 
     """
 
