@@ -16,6 +16,9 @@ class Discount:
     def get_discount(self, order):
         return NotImplementedError()
 
+    def get_meta_data(self):
+        return NotImplementedError()
+
 
 class TwoForOneDiscount(Discount):
     """
@@ -26,6 +29,7 @@ class TwoForOneDiscount(Discount):
 
     def __init__(self, product_code):
         self.product_code = product_code
+        self.product_quantity = 0
 
     def get_discount(self, order):
         """
@@ -36,6 +40,7 @@ class TwoForOneDiscount(Discount):
         discount = 0.00
         product_orders = order.product_orders
         product_order = product_orders.get(self.product_code)
+        self.product_quantity = product_order.quantity
 
         if product_order:
             quantity = product_order.quantity
@@ -43,6 +48,9 @@ class TwoForOneDiscount(Discount):
             discount = num_free_items * product_order.product.price
 
         return discount
+
+    def get_meta_data(self):
+        return {'code': self.product_code, 'quantity': self.product_quantity}
 
 
 class BulkPurchaseDiscount(Discount):
@@ -76,3 +84,10 @@ class BulkPurchaseDiscount(Discount):
                 discount = self.discount_per_unit * quantity
 
         return discount
+
+    def get_meta_data(self):
+        return {
+            'product_code': self.product_code,
+            'min_quantity': self.min_amount,
+            'discount_per_unit': self.discount_per_unit
+        }

@@ -16,6 +16,7 @@ class Checkout:
     def __init__(self, pricing_rules):
         self.pricing_rules = pricing_rules
         self.order = Order()
+        self.discount_array = []
 
     def scan(self, product_code):
         """
@@ -53,9 +54,26 @@ class Checkout:
         total_discount = 0.00
 
         for promotion in self.pricing_rules:
-            total_discount += promotion.get_discount(self.order)
+            discount = promotion.get_discount(self.order)
+            total_discount += discount
 
         return total_discount
+
+    def get_discount_array(self):
+        discount_array = []
+
+        for promotion in self.pricing_rules:
+            discount = promotion.get_discount(self.order)
+            if discount > 0:
+                discount_array.append(
+                    {
+                        'name': type(promotion).__name__,
+                        'amount': discount,
+                        'metadata': promotion.get_meta_data()
+                    }
+                )
+
+        return discount_array
 
     def get_total_display(self):
         """
@@ -63,3 +81,13 @@ class Checkout:
         """
         total = self.total
         return '%.2f\N{euro sign}' % total
+
+    def get_receipt(self):
+        receipt = {
+            'total': self.get_total_amount(),
+            'discount': self.get_discount_array(),
+            'discounted_amount': self.get_total_discount(),
+            'final_amount': self.total
+        }
+
+        return receipt
